@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="Drag">
     <div class="imageList" >
       <div class="imgDiv" v-for="(img, index) in imageList" :key="index" draggable="true"
       :class="{'activeStyle': index === isActiveStyleIndex}"
@@ -29,7 +29,7 @@ import demo7 from '@/images/demo7.jpg'
 import demo8 from '@/images/demo8.jpg'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Drag',
   data () {
     return {
       startData: null,
