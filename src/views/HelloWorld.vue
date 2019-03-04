@@ -2,6 +2,7 @@
   <div class="hello">
     <div class="imageList" >
       <div class="imgDiv" v-for="(img, index) in imageList" :key="index" draggable="true"
+      :class="{'activeStyle': index === isActiveStyleIndex}"
       @dragstart="dragstart_handler($event, index)"
       @drag="drag_handler($event, index)"
       @dragend="dragend_handler($event, index)"
@@ -22,6 +23,10 @@ import demo1 from '@/images/demo1.jpg'
 import demo2 from '@/images/demo2.jpg'
 import demo3 from '@/images/demo3.jpg'
 import demo4 from '@/images/demo4.jpg'
+import demo5 from '@/images/demo5.jpg'
+import demo6 from '@/images/demo6.jpg'
+import demo7 from '@/images/demo7.jpg'
+import demo8 from '@/images/demo8.jpg'
 
 export default {
   name: 'HelloWorld',
@@ -30,11 +35,16 @@ export default {
       startData: null,
       endData: null,
       startIndex: null,
+      isActiveStyleIndex: null, // 被放置的目标元素的样式发生变化
       imageList: [
         demo1,
         demo2,
         demo3,
-        demo4
+        demo4,
+        demo5,
+        demo6,
+        demo7,
+        demo8
       ]
     }
   },
@@ -61,6 +71,8 @@ export default {
     },
     dragover (ev, index) {
       // 可放置拖拽元素的目标元素 在目标元素上移动时
+
+      this.isActiveStyleIndex = index
       ev.preventDefault()
       // // Set the dropEffect to move
       // ev.dataTransfer.dropEffect = 'move'
@@ -80,6 +92,7 @@ export default {
       ev.preventDefault()
       this.imageList.splice(this.startIndex, 1)
       this.imageList.splice(index, 0, this.startData)
+      this.isActiveStyleIndex = null
       this.$set(this.imageList, index, this.imageList[index])
     }
   }
@@ -89,10 +102,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .imageList{
-  display: flex;
-  .imgDiv{ width: 100px; height: auto;margin: 10px;
-    img{width: 100%;height: auto;}
+  display: flex; flex-wrap: wrap;
+  .imgDiv{ width: 100px; height: auto;margin: 5px;border: 5px solid #fff; border-radius: 3px; transition: all 0.1s linear;
+    img{width: 100%;height: 100%;}
   }
+  .activeStyle{ opacity: 0.5; border-color:#EFE0D3; transition: all 0.1s linear;}
 }
 
 </style>
